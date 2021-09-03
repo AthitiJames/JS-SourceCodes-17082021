@@ -45,6 +45,6 @@ function playGames(p1, p2, play) {
 }
 
 console.log(playGames("Alice", "Bob", 5));
-// console.log(playGames("Prew", "Mhai", 5));
-// console.log(playGames("Fahh", "Yok", 5));
+console.log(playGames("Prew", "Mhai", 5));
+console.log(playGames("Fahh", "Yok", 5));
 console.log(typeof(dice));
