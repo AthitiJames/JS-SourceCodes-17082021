@@ -45,6 +45,8 @@ console.log(dice1.roll());
 console.log(dice1.faceValue);
 console.log(dice1["faceValue"]);
 dice1.faceValue = 5;
+
+
 console.log(dice1.toString());
 
 
