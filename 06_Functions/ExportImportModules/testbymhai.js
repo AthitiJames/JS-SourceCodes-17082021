@@ -37,6 +37,10 @@ let r = new ranDom();
 r.randomNumArray();
 console.log(r.toString());
 
+function a(element){
+    return element.grade === 'B' ;
+}
+
 
 
 
