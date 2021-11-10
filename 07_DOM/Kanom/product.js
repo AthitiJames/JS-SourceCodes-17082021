@@ -2,15 +2,15 @@
 // โดยข้างใน object จะมีข้อมูล id name price amount และ path image อยู่
 let macarone = {
     productId: "KN001",
-    productName: "macarone",
+    productName: "Macarone",
     price: 200,
-    amountProducts: 50,
+    amountProducts: 5,
     img: "img/macarone.jpg"
   };
   
   let brownie = {
     productId: "KN002",
-    productName: "brownie",
+    productName: "Brownie",
     price: 130,
     amountProducts: 60,
     img: "img/brownie.jpeg"
@@ -18,7 +18,7 @@ let macarone = {
   
   let muffin = {
     productId: "KN003",
-    productName: "muffin",
+    productName: "Muffin",
     price: 180,
     amountProducts: 70,
     img: "img/muffin.jpeg"
@@ -26,7 +26,7 @@ let macarone = {
   
   let moji = {
     productId: "KN004",
-    productName: "moji",
+    productName: "Moji",
     price: 100,
     amountProducts: 80,
     img: "img/moji.jpg"
