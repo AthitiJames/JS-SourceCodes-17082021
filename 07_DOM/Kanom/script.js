@@ -99,9 +99,12 @@ search.addEventListener("click", (event) => {
   event.preventDefault(); 
   const searchBar = document.querySelector("#inputForm");
   if (searchBar.classList.contains("d-none")) {
+    document.querySelector("#inputForm input").value = "" ;
     searchBar.classList.remove("d-none");
   } else {
     searchBar.classList.add("d-none");
+    removeAllProducts();
+    showAllProducts(kanom);
   }
 });
 
