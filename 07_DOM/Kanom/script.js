@@ -1,150 +1,136 @@
 // import ตัวแปรจากไฟล์ product.js เข้ามาใช้
 import { macarone, brownie, muffin, moji } from "./product.js";
-import { chackAndAdd, showCart } from "./cart.js";
+import { checkAndAdd } from "./cart.js";
 
 // เอาตัวแปรที่ทำการ import มานำมาเก็บใน array kanom
 const kanom = [macarone, brownie, muffin, moji];
 
-// หา div id = products ด้วยคำสั่ง querySelector
-const divProductsEle = document.querySelector("#products");
+// function showAllProducts สำหรับเพื่อแสดงผล product ทั้งหมดบนหน้าเว็บ
+function showAllProducts(kanom){
 
-// ใช้ loop for in สำหรับเรียกค่าใน array มาแสดงผล
-for (let index in kanom) {
-  // สร้าง element div เพื่อกำหนด div แต่ละตัวให้มี class เป็นของตัวเอง
-  const divKanomEle = document.createElement("div");
-  // setAttribute เพื่อกำหนด id ของ div ให้เป็นของขนมที่เก็บ
-  divKanomEle.setAttribute("id", kanom[index].productId);
-  // appendChild สำหรับการแทรก div id ขนมต่่าง ๆ ไปเก็บไว้ใน div id = products
-  divProductsEle.appendChild(divKanomEle);
+  // หา div id = products ด้วยคำสั่ง querySelector
+  const divProductsEle = document.querySelector("#products");
+  
+  //ใช้ method array forEach สำหรับการนำค่าใน array kanom มาใส่ใน tag ต่าง ๆ
+  kanom.forEach((product)=>{
+    // สร้าง element div เพื่อกำหนด div แต่ละตัวให้มี class เป็นของตัวเอง
+    const divKanomEle = document.createElement("div");
+    // setAttribute เพื่อกำหนด id ของ div ให้เป็นของขนมที่เก็บ
+    divKanomEle.setAttribute("id", product.productId);
+    divKanomEle.className = "products";
+    // appendChild สำหรับการแทรก div id ขนมต่่าง ๆ ไปเก็บไว้ใน div id = products
+    divProductsEle.appendChild(divKanomEle);
 
-  // สร้าง element p และแสดงผล Kanom Name ก่อนจะนำไปแทรกใน divKanomEle
-  const kKanomNameEle = document.createElement("p");
-  kKanomNameEle.className = `card-header`;
-  kKanomNameEle.textContent = kanom[index].productName;
-  divKanomEle.appendChild(kKanomNameEle);
+    // สร้าง element p และแสดงผล Kanom Name ก่อนจะนำไปแทรกใน divKanomEle
+    const kKanomNameEle = document.createElement("p");
+    kKanomNameEle.className = `card-header`;
+    kKanomNameEle.textContent = product.productName;
+    divKanomEle.appendChild(kKanomNameEle);
 
-  // แสดงผลรูปขนม มีการสร้าง element img
-  const kKanomImgEle = document.createElement("img");
-  // src สำหรับ set path ของรูปภาพขนมนั้น ๆ
-  kKanomImgEle.src = `${kanom[index].img}`;
-  // classname สำหรับกำหนดชื่อรูป
-  kKanomImgEle.className = `photoKanom`;
-  // appendChild สำหรับการแทรก kKanomImgEle ไปใส่ใน divKanomEle และสร้าง element br
-  divKanomEle.appendChild(kKanomImgEle);
-  divKanomEle.appendChild(document.createElement("br"));
+    // แสดงผลรูปขนม มีการสร้าง element img
+    const kKanomImgEle = document.createElement("img");
+    // src สำหรับ set path ของรูปภาพขนมนั้น ๆ
+    kKanomImgEle.src = `${product.img}`;
+    // classname สำหรับกำหนดชื่อรูป
+    kKanomImgEle.className = `photoKanom`;
+    // appendChild สำหรับการแทรก kKanomImgEle ไปใส่ใน divKanomEle และสร้าง element br
+    divKanomEle.appendChild(kKanomImgEle);
+    divKanomEle.appendChild(document.createElement("br"));
 
-  // สร้าง element p และแสดงผล Kanom Id ก่อนจะนำไปแทรกใน divKanomEle
-  // const kKanomIdEle = document.createElement("p");
-  // kKanomIdEle.textContent = "Kanom Id: " + kanom[index].productId;
-  // divKanomEle.appendChild(kKanomIdEle);
+    // สร้าง element p และแสดงผล Price ก่อนจะนำไปแทรกใน divKanomEle
+    const kKanomPriceEle = document.createElement("p");
+    kKanomPriceEle.className = `card-title`;
+    kKanomPriceEle.textContent = "Price: " + product.price;
+    divKanomEle.appendChild(kKanomPriceEle);
 
-  // สร้าง element p และแสดงผล Price ก่อนจะนำไปแทรกใน divKanomEle
-  const kKanomPriceEle = document.createElement("p");
-  kKanomPriceEle.className = `card-title`;
-  kKanomPriceEle.textContent = "Price: " + kanom[index].price;
-  divKanomEle.appendChild(kKanomPriceEle);
+    // สร้าง element p และแสดงผล AmountProducts ก่อนจะนำไปแทรกใน divKanomEle
+    const kKanomAmountProductsEle = document.createElement("p");
+    kKanomAmountProductsEle.className = `card-text`;
+    kKanomAmountProductsEle.textContent =
+      "AmountProducts: " + product.amountProducts;
+    divKanomEle.appendChild(kKanomAmountProductsEle);
 
-  // สร้าง element p และแสดงผล AmountProducts ก่อนจะนำไปแทรกใน divKanomEle
-  const kKanomAmountProductsEle = document.createElement("p");
-  kKanomAmountProductsEle.className = `card-text`;
-  kKanomAmountProductsEle.textContent =
-    "AmountProducts: " + kanom[index].amountProducts;
-  divKanomEle.appendChild(kKanomAmountProductsEle);
+    // สร้าง element button เป็นปุ่ม add ก่อนจะนำไปแทรกใน divKanomEle
+    const kKanomButtonEle = document.createElement("button");
+    kKanomButtonEle.textContent = "Add";
+    divKanomEle.appendChild(kKanomButtonEle);
 
-  // สร้าง element button เป็นปุ่ม add ก่อนจะนำไปแทรกใน divKanomEle
-  const kKanomButtonEle = document.createElement("button");
-  kKanomButtonEle.textContent = "Add";
-  divKanomEle.appendChild(kKanomButtonEle);
+    /* querySelector ปุ่ม add ของขนมแต่ละอย่างจากหน้า index มา จากนั้นก็ดักจับ event 
+    เมื่อคลิกปุ่มให้ตรวจสอบโดยการเรียกใช้ฟังก์ชัน changeAmount() โดยส่ง index และ id ของขนมแต่ละอย่าง 
+    ถ้าของในสต็อกยังมีเหลืออยู่ให้เรียกใช้ฟังก์ชัน checkAndAdd() โดยส่ง id ชื่อและราคาของขนมแต่ละอย่างเพื่อ add
+    เข้าไปเก็บใน productInCart[] (ในตะกร้า) และให้แสดงผลเมื่อคลิกปุ่ม add ว่า Add Kanom: id ของขนม Success!!!` */
+    kKanomButtonEle.addEventListener('click', () => {
+      if (changeAmount(product)) {
+        checkAndAdd(product.productId, product.productName, product.price);
+        alert(`Add Kanom: ${product.productId} Success!!!`);
+      }
+      // ในทุกๆครั้งที่กดปุ่มจะทำการ update kKanomAmountProductsEle เสมอเพื่อแสดงผลบนเว็บว่าขณะนี้เหลือขนมอีกเท่าไหร่
+      kKanomAmountProductsEle.textContent = "AmountProducts: " + product.amountProducts;
+    });
+
+  });
+
 }
-// querySelector ปุ่ม ตะกร้าจากหน้า index มา จากนั้นก็ดักจับ event เมื่อกดปุ่มให้เรียกใช้งานฟังก์ขัน showCart() มาทำงาน
-const basketBtn = document.querySelector("#basket");
-basketBtn.addEventListener('click', () => {
-  showCart();
-});
 
-function changAmount(indexKanom, idKanom){
-  if(kanom[indexKanom].amountProducts == 0){
+// เรียกใช้ function showAllProduct
+showAllProducts(kanom);
+
+/* function changeAmount() ใช้เช็กของในสต็อกว่ามีอยู่ไหม 
+ถ้าไม่มีให้แสดงผลว่า Out Of Stock และ return false ออกมา แต่ถ้ามีขนมอยู่ให้ลบ
+จำนวนของสต็อกออกไป 1 โดย querySelector หา tag ที่เเสดงขนมในหน้า index 
+แล้วเปลี่ยนจำนวนสต็อกให้เป็นจำนวนที่ลบ 1 แล้ว และ return true */
+function changeAmount(product) {
+  if (product.amountProducts == 0) {
     alert(`Out Of Stock`);
     return false;
-  } else{
-      kanom[indexKanom].amountProducts--;
-      const kKanomAmountP = document.querySelector(idKanom + " .card-text");
-      kKanomAmountP.textContent = "AmountProducts: " + kanom[indexKanom].amountProducts;
-      return true;
-      }
-  
-  
+  } else {
+    product.amountProducts--;
+    return true;
   }
+}
 
-// querySelector ปุ่ม add ของขนมแต่ละอย่างจากหน้า index มา จากนั้นก็ดักจับ event เมื่อกดปุ่มให้เรียกใช้งานฟังก์ขัน chackAndAdd() มาทำงาน
-//เพื่อเช็คว่าขนมมีอยู่ในตะกร้าอยู่ไหม ถ้าไม่มีก็ add ขนมเข้าไปเก็บไว้ใน productInCart แต่ถ้ามีให้เพิ่ม amount +1 หลังจากนั้นใช้ alert แสดงขนมที่ add เข้าไป
-const addMCRBtn = document.querySelector("#KN001 button");
-addMCRBtn.addEventListener('click', () => {
-  // changAmount(0, "#KN001");
-  if(changAmount(0, "#KN001")){
-    chackAndAdd(macarone.productId, macarone.productName, macarone.price);
-    alert(`Add Kanom: ${macarone.productId} Success!!!`);
-  }
-  
-});
-
-const addBNBtn = document.querySelector("#KN002 button");
-addBNBtn.addEventListener('click', () => {
-  chackAndAdd(brownie.productId, brownie.productName, brownie.price);
-  alert(`Add Kanom: ${brownie.productId} Success!!!`);
-});
-//  
-const addMRBtn = document.querySelector("#KN003 button");
-addMRBtn.addEventListener('click', () => {
-  chackAndAdd(muffin.productId, muffin.productName, muffin.price);
-  alert(`Add Kanom: ${muffin.productId} Success!!!`);
-});
-//  
-const addMJtn = document.querySelector("#KN004 button");
-addMJtn.addEventListener('click', () => {
-  chackAndAdd(moji.productId, moji.productName, moji.price);
-  alert(`Add Kanom: $moji.productId} Success!!!`);
-});
-
-
-// ----------------------------------------------------------------------------- //
-//เพิ่ม event click เพื่อจะแสดง searchBar
+// สร้างตัวแปร search ขึ้นมาสำหรับรองรับ class searchButton(icon search)
 const search = document.querySelector("#searchButton");
-search.addEventListener("click", (e) => {
-  e.preventDefault();
-  const searchBar = document.querySelector("#inputForm"); //ให้แสดงปุ่มsearchBarขึ้นมา
-
-  //ถ้า searchBar มี class ชื่อ hidden ให้ลบ hidden ออก ถ้าไม่มีให้เพิ่ม
+/* สร้างเงื่อนไขเมื่อกด icon search 
+หากตัวแถบค้นหายังไม่ขึ้น จะทำการ remove class d-none จาก inputForm เพื่อทำการแสดงผล 
+แต่ถ้าหาก class inputForm ยังแสดงผลอยู่เมื่อกด icon search จะทำการใส่ d-none ลง class เพื่อปิดแถบค้นหา */
+search.addEventListener("click", (event) => {
+  // ป้องกันไม่ให้ event เกิดขึ้นตอนที่เราเปิด browser ขึ้นมา(ป้องกันการเกิด default)
+  event.preventDefault(); 
+  const searchBar = document.querySelector("#inputForm");
   if (searchBar.classList.contains("d-none")) {
     searchBar.classList.remove("d-none");
-    //ทำการ insearch
   } else {
     searchBar.classList.add("d-none");
   }
 });
 
-/*
-//Function for adding product---------------------
-function addProductToCart(event){
-  let Pid = event.target.id
-  let exist = false;
-  if(cart.length==0){ //ของชิ้นแรก เพิ่มแน่นอน
-      cart.push([Pid,1])
-  }
-  else{
-      for(let c of cart){ //เช็คว่า id นี้มีในตะกร้าแล้วหรือยัง
-          if(Pid==c[0]){ // ถ้ามี เพิ่มจำนวน
-              c[1] +=1;
-              exist = true
-          }
-      }
-      if(exist==false){// ถ้าไม่มี ให้เพิ่มเป็นของใหม่ในตะกร้า
-          cart.push([Pid,1]);
-      }
-  }
-  console.log(cart)
-
-  alert("add product " + Pid + "to your cart")
-  numProductInCart();
+/* function removeAllProducts() สำหรับการเอาสินค้าทั้งหมดออกจากหน้าเว็บไซต์
+โดยภายในจะมีการใช้ while loop สำหรับการเช็คค่าก่อนว่ามี elements.firstChild เช็คว่า element มีลูกตัวแรกหรือไม่
+หากใช่จะทำการลบ child ตัวแรก โดยไล่ลบไปเรื่อย ๆ จนหมด */
+function removeAllProducts() {
+    const elements = document.querySelector("#products");
+    while (elements.firstChild) {
+      elements.removeChild(elements.firstChild);
+    }
 }
-*/
+
+/* สร้างตัวแปร searchBtn สำหรับรับ class inputForm ที่เป็นตัว button 
+เมื่อทำการคลิกจะทำการใช้ function removeAllProducts() เพื่อเอา product ทั้งหมดในหน้าเว็บออกก่อนที่จะ
+เรียกใช้งาน function searchProduct() เพื่อทำการแสดงผลสินค้าที่ทำการหา */
+const searchBtn = document.querySelector("#inputForm button");
+searchBtn.addEventListener("click", () => {
+  removeAllProducts();
+  searchProducts(document.querySelector("#inputForm input").value)
+}, false);
+
+/* function searchProducts ที่รับ parameter มาจาก การกรอกเงื่อนไขใน searchBtn 
+โดยใช้ array method filter เพื่อทำการหาตัวที่เข้ากรณีที่กำหนดภายใน 
+และใช้ includes เช็คตัวอักษรที่ผู้ใช้งานได้กรอกไปนั่น มีอยู่ในชื่อขนมไหนบ้าง 
+มีการใช้ LowerCase เพื่อป้องกัน case sensitive (ปัญหาที่เกิดจาการพิมพ์ตัวพิมพ์ใหญ่ตัวพิมพ์เล็ก) */
+function searchProducts(searchName) {
+  const filteredProduct = kanom.filter(
+    (kanom)  => kanom.productName.toLowerCase().includes(searchName.toLowerCase())
+  );
+  showAllProducts(filteredProduct); // เอา product ทั้งหมดมาทำการ filter
+}
