@@ -1,18 +1,28 @@
 // import ตัวแปรจากไฟล์ product.js เข้ามาใช้
 import { macarone, brownie, muffin, moji } from "./product.js";
-import { checkAndAdd } from "./cart.js";
+import { checkAndAdd, cookiesFunction } from "./cart.js";
 
 // เอาตัวแปรที่ทำการ import มานำมาเก็บใน array kanom
-const kanom = [macarone, brownie, muffin, moji];
+export let kanom = [macarone, brownie, muffin, moji];
+
+// load cookies amount ของสินค้าทั้งหมด(หลังจากกด add เข้าตะกร้าไปแล้ว)
+cookiesFunction.loadShopCookie();
+// load cookies ประวัติการเพิ่มสินค้าลงในตะกร้า
+cookiesFunction.loadCookie();
 
 // function showAllProducts สำหรับเพื่อแสดงผล product ทั้งหมดบนหน้าเว็บ
-function showAllProducts(kanom){
+export function showAllProducts(kanom) {
+  // removeAllProducts();
 
   // หา div id = products ด้วยคำสั่ง querySelector
   const divProductsEle = document.querySelector("#products");
-  
+
+  // let kanomAll = kanom.reduce((previousValue, currentValue) => {
+  //   return [...previousValue, ...currentValue];
+  // })
+
   //ใช้ method array forEach สำหรับการนำค่าใน array kanom มาใส่ใน tag ต่าง ๆ
-  kanom.forEach((product)=>{
+  kanom.forEach((product) => {
     // สร้าง element div เพื่อกำหนด div แต่ละตัวให้มี class เป็นของตัวเอง
     const divKanomEle = document.createElement("div");
     // setAttribute เพื่อกำหนด id ของ div ให้เป็นของขนมที่เก็บ
@@ -61,15 +71,13 @@ function showAllProducts(kanom){
     เข้าไปเก็บใน productInCart[] (ในตะกร้า) และให้แสดงผลเมื่อคลิกปุ่ม add ว่า Add Kanom: id ของขนม Success!!!` */
     kKanomButtonEle.addEventListener('click', () => {
       if (changeAmount(product)) {
-        checkAndAdd(product.productId, product.productName, product.price);
+        checkAndAdd(product, 1);
         alert(`Add Kanom: ${product.productId} Success!!!`);
       }
       // ในทุกๆครั้งที่กดปุ่มจะทำการ update kKanomAmountProductsEle เสมอเพื่อแสดงผลบนเว็บว่าขณะนี้เหลือขนมอีกเท่าไหร่
       kKanomAmountProductsEle.textContent = "AmountProducts: " + product.amountProducts;
     });
-
   });
-
 }
 
 // เรียกใช้ function showAllProduct
@@ -96,14 +104,13 @@ const search = document.querySelector("#searchButton");
 แต่ถ้าหาก class inputForm ยังแสดงผลอยู่เมื่อกด icon search จะทำการใส่ d-none ลง class เพื่อปิดแถบค้นหา */
 search.addEventListener("click", (event) => {
   // ป้องกันไม่ให้ event เกิดขึ้นตอนที่เราเปิด browser ขึ้นมา(ป้องกันการเกิด default)
-  event.preventDefault(); 
+  event.preventDefault();
   const searchBar = document.querySelector("#inputForm");
   if (searchBar.classList.contains("d-none")) {
-    document.querySelector("#inputForm input").value = "" ;
     searchBar.classList.remove("d-none");
   } else {
     searchBar.classList.add("d-none");
-    removeAllProducts();
+    document.querySelector("#inputForm input").value = "";
     showAllProducts(kanom);
   }
 });
@@ -111,19 +118,28 @@ search.addEventListener("click", (event) => {
 /* function removeAllProducts() สำหรับการเอาสินค้าทั้งหมดออกจากหน้าเว็บไซต์
 โดยภายในจะมีการใช้ while loop สำหรับการเช็คค่าก่อนว่ามี elements.firstChild เช็คว่า element มีลูกตัวแรกหรือไม่
 หากใช่จะทำการลบ child ตัวแรก โดยไล่ลบไปเรื่อย ๆ จนหมด */
-function removeAllProducts() {
-    const elements = document.querySelector("#products");
-    while (elements.firstChild) {
-      elements.removeChild(elements.firstChild);
-    }
-}
+// function hideAllProducts() {
+//   const elements = document.querySelector("#products");
+//   while (elements.firstChild) {
+//     elements.style.display = 'none';
+//   }
+
+  // const elements = document.querySelector("#products");
+  // while (elements.firstChild) {
+  //   elements.removeChild(elements.firstChild);
+  // }
+// }
+
+// function showsSarch(products){
+//   products.reduce(())
+// }
 
 /* สร้างตัวแปร searchBtn สำหรับรับ class inputForm ที่เป็นตัว button 
 เมื่อทำการคลิกจะทำการใช้ function removeAllProducts() เพื่อเอา product ทั้งหมดในหน้าเว็บออกก่อนที่จะ
 เรียกใช้งาน function searchProduct() เพื่อทำการแสดงผลสินค้าที่ทำการหา */
 const searchBtn = document.querySelector("#inputForm button");
 searchBtn.addEventListener("click", () => {
-  removeAllProducts();
+  // removeAllProducts();
   searchProducts(document.querySelector("#inputForm input").value)
 }, false);
 
@@ -133,7 +149,9 @@ searchBtn.addEventListener("click", () => {
 มีการใช้ LowerCase เพื่อป้องกัน case sensitive (ปัญหาที่เกิดจาการพิมพ์ตัวพิมพ์ใหญ่ตัวพิมพ์เล็ก) */
 function searchProducts(searchName) {
   const filteredProduct = kanom.filter(
-    (kanom)  => kanom.productName.toLowerCase().includes(searchName.toLowerCase())
+    (kanom) => kanom.productName.toLowerCase().includes(searchName.toLowerCase())
   );
+  
+  
   showAllProducts(filteredProduct); // เอา product ทั้งหมดมาทำการ filter
 }
