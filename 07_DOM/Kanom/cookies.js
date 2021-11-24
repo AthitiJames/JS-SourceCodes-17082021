@@ -15,8 +15,7 @@ export class CookieUtil {
     }
 
     /* set จะทำการกำหนดวันที่ให้หมดอายุเป็นวันที่ Fri Dec 31 2021 00:00:00 GMT+0700
-    มีรับ parameter name และ value โดย cookieText จะทำการเก็บ ชื่อ ผลลัพธ์ และวันหมดอายุ
-    ยกตัวอย่างเช่น cart=KN004-4%2C; expires=Thu, 30 Dec 2021 17:00:00 GMT */
+    มีรับ parameter name และ value โดย cookieText จะทำการเก็บ ชื่อ ผลลัพธ์ และวันหมดอายุ */
     static set(name, value) {
         let expireDate = new Date('2021-12-31T00:00');
         let cookieText = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
