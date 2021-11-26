@@ -23,7 +23,7 @@ export function checkAndAdd(kanom, quantity) {
     cookiesFunction.saveCookie(); // save cookies ทั้งประวัติตะกร้าสินค้าและประวัติ amount
 }
 
-// function totalAmount() จากตอนแรกใช้เป็น For of ได้ทำการเปลี่ยนมาใช้ Array Method reduce แทน สำหรับรวมราคาทั้งหมดของสินค้าที่อยู่ในตะกร้า -------
+// function totalAmount() จากตอนแรกใช้เป็น For of ได้ทำการเปลี่ยนมาใช้ Array Method reduce แทน สำหรับรวมราคาทั้งหมดของสินค้าที่อยู่ในตะกร้า
 function totalAmount() {
     let totalPrice = productInCart.reduce((total, current) => {
         return total + (current.price * current.quantity);
@@ -44,7 +44,7 @@ function showPopUp() {
     const modal = document.querySelector('#content'); //ตำแหน่งที่จะวาง
 
     // ถ้าเกิดในกรณีที่ว่าไม่มีของในตะกร้าเลย popup จะทำการแสดงผลว่า No Product
-    if (productInCart.length == 0) {
+    if (productInCart.length === 0) {
         const text = document.createElement("p");
         text.className = `modal-body`;
         text.textContent = "No Product";
@@ -88,7 +88,7 @@ function showPopUp() {
                 // ทำการ update amount หน้าเว็บใหม่อีกครั้งหนึ่ง
                 changeTextAmount(kanom);
 
-                //showAllProducts(kanom);
+                // showPopUp();
                 showPopUp();
 
                 // ทำการ save cookies
@@ -157,7 +157,7 @@ export let cookiesFunction = {
         if (cart !== null) {
             cart.forEach(product => {
                 let findProduct = kanom.find((item) => item.productId === product.productId);
-                kanom.amountProducts-product.quantity;
+                // kanom.amountProducts = kanom.amountProducts-product.quantity;
                 checkAndAdd(findProduct, Number(product.quantity));
             });
         }
@@ -174,7 +174,6 @@ export let cookiesFunction = {
 
     // function deleteCookie() สำหรับการลบประวัติ cookies
     deleteCookie: function () {
-        productInCart = [];
         CookieUtil.unset("cart");
     }
 }

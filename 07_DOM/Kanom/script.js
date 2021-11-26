@@ -148,6 +148,5 @@ export function changeTextAmount(kanom) {
   kanom.forEach(products => {
     const change = document.querySelector(`#${products.productId} .card-text`);
       change.textContent = `AmountProducts: ${products.amountProducts}`;
-      console.log(change);
   });
 }
