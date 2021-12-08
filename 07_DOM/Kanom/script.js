@@ -16,7 +16,7 @@ export function showAllProducts(kanom) {
 
   // หา div id = products ด้วยคำสั่ง querySelector
   const divProductsEle = document.querySelector("#products");
- 
+
   //ใช้ method array forEach สำหรับการนำค่าใน array kanom มาใส่ใน tag ต่าง ๆ
   kanom.forEach((product) => {
     // สร้าง element div เพื่อกำหนด div แต่ละตัวให้มี class เป็นของตัวเอง

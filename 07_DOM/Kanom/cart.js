@@ -20,7 +20,7 @@ export function checkAndAdd(kanom, quantity) {
     // ใช้ method array push สำหรับกรณีที่ยังไม่มีการ add ขนมเลย โดยจะทำการเก็บเป็น Object ที่ประกอบด้วย key กับ value
     productInCart.push({ productId: kanom.productId, productName: kanom.productName, price: kanom.price, quantity: quantity });
     addNumCart(); // การเพิ่มตัวเลขตรง noti จะเพิ่มเฉพาะเวลา add kanom อันใหม่เข้าไป
-    cookiesFunction.saveCookie(); // save cookies ทั้งประวัติตะกร้าสินค้าและประวัติ amount
+    cookiesFunction.saveCookie(); // save cookies
 }
 
 // function totalAmount() จากตอนแรกใช้เป็น For of ได้ทำการเปลี่ยนมาใช้ Array Method reduce แทน สำหรับรวมราคาทั้งหมดของสินค้าที่อยู่ในตะกร้า
@@ -169,7 +169,7 @@ export let cookiesFunction = {
         productInCart.forEach((product) => {
             textCookie.push({ productId: product.productId, quantity: product.quantity });
         })
-        CookieUtil.set("cart", JSON.stringify(textCookie));
+        CookieUtil.set("cart", JSON.stringify(textCookie), 7);
     },
 
     // function deleteCookie() สำหรับการลบประวัติ cookies
@@ -182,7 +182,6 @@ export let cookiesFunction = {
 
 
 
- // ไว้แก้ชาติหน้าตอนบ่ายๆอะ !ถึงแล้วบอกนะเดี๋ยวมาดู
         // let textProductsCookie = JSON.parse(CookieUtil.get("shop"));
         // console.log(`${textProductsCookie} get`);
         // if (textProductsCookie !== null) {
@@ -192,8 +191,6 @@ export let cookiesFunction = {
         //     console.log(kanom);
         //     // changeTextAmount(kanom);
         // }
-
-
 
         // let textProductsCookie = JSON.parse(CookieUtil.get("shop")); 
         // console.log(`${textProductsCookie} jsjsjs`);
@@ -208,7 +205,7 @@ export let cookiesFunction = {
         //         }
         //     }
 
-        // นางทัวดี
+        // 
         // let textProductsCookie = [];
         // kanom.forEach(product => {
         //     textProductsCookie.push(product.amountProducts);

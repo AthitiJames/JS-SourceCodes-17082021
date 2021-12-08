@@ -34,4 +34,3 @@ let macarone = {
   
   // export ตัวแปรทั้งหมดในไฟล์ product.js
   export { macarone, brownie, muffin, moji };
-  

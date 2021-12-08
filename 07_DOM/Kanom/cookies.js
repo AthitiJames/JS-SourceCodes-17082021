@@ -14,13 +14,15 @@ export class CookieUtil {
         return cookieValue;
     }
 
-    /* set จะทำการกำหนดวันที่ให้หมดอายุเป็นวันที่ Fri Dec 31 2021 00:00:00 GMT+0700
-    มีรับ parameter name และ value โดย cookieText จะทำการเก็บ ชื่อ ผลลัพธ์ และวันหมดอายุ */
-    static set(name, value) {
-        let expireDate = new Date('2021-12-31T00:00');
+    /* set จะทำการกำหนดวันที่ให้หมดอายุเป็นอีก 7 วัน นับจากวันที่ set cookie
+    มีรับ parameter name, value, valid_days โดย cookieText จะทำการเก็บ ชื่อ ผลลัพธ์ และวันหมดอายุ */
+    static set(name, value, valid_days) {
+        const expires = valid_days * 1000 * 60 * 60 * 24;
+        let date = new Date()
+        date.setTime(date.getTime() + expires);
         let cookieText = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-        if (expireDate instanceof Date) {
-            cookieText += `; expires=${expireDate.toUTCString()}`;
+        if (date instanceof Date) {
+            cookieText += `; expires=${date.toUTCString()}`;
         }
         document.cookie = cookieText;
     }
